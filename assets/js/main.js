@@ -3,17 +3,18 @@ import Game from './scenes/game.js';
 
 const config = {
   type: Phaser.AUTO,
-  width: 400,
-  height: 250,
+  width: 800,
+  height: 600,
   physics: {
-    defaults: 'arcade',
+    default: 'arcade',
     arcade: {
-      gravity: { y: 0 },
+      gravity: { y: 300 },
+      debug: false,
     },
   },
   scene: [Preloader, Game],
   scale: {
-    zoom: 2,
+    zoom: 1,
   },
 };
 
