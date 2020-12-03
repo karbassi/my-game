@@ -1,17 +1,14 @@
-import Phaser from 'phaser';
-
-export default class Game extends Phaser.Scene {
+export default class Preloader extends Phaser.Scene {
   constructor() {
     super('preloader');
   }
 
   preload() {
-this.preload().image('tiles', 'assets/tiles/frame.png')
-this.preload().tilemapTiledJSON('mygame', 'assets/tiles/level-design.json')
+    this.load.image('tiles', 'assets/tiles/frame.png');
+    this.load.tilemapTiledJSON('mygame', 'assets/tiles/level-design.json');
   }
 
-  create()
-  {
-this.scene.start('game')
+  create() {
+    this.scene.start('game');
   }
 }
