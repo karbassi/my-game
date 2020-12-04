@@ -5,7 +5,7 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
 
-    this.CHARACTER_SPEED = 100;
+    this.CHARACTER_SPEED = 150;
   }
 
   preload() {
@@ -13,11 +13,15 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    this.add.image(900, 1400, 'background');
     createCharacterAnims(this.anims);
 
     const map = this.make.tilemap({ key: 'mygame' });
-    const tileset = map.addTilesetImage('entire-set', 'tiles');
 
+    // const tileset = map.addTilesetImage('interaction-element', 'interaction-tiles');
+    const tileset = map.addTilesetImage('entire-set-2', 'tiles');
+
+    // this.main = map.createStaticLayer('interaction-layer', tileset);
     this.main = map.createStaticLayer('main', tileset);
 
     this.main.setCollisionByProperty({ collides: true });
@@ -45,9 +49,22 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.right.isDown) {
       this.character.play('character-run-right', true);
       this.character.setVelocityX(this.CHARACTER_SPEED);
+      // } else if (this.cursors.up.isDown) {
+      //   this.character.play('character-run-right', true);
+      //   this.character.setVelocityY(-330);
     } else {
       this.character.play('character-idle', true);
       this.character.setVelocityX(0);
     }
+
+    // if (this.cursors.up.isDown) {
+    //   this.character.setVelocityY(-330);
+    // }
+
+    //   if (cursors.up.isDown && player.body.touching.down) { player.setVelocityY(-330);}
   }
 }
+
+// function collectInteraction-element(character, interaction-element) {
+//   interaction-element.disableBody(true, true)
+// }

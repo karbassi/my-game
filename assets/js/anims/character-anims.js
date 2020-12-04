@@ -12,7 +12,7 @@ export default function createCharacterAnims(anims) {
       start: 1,
       end: 4,
     }),
-    frameRate: 3,
+    frameRate: 5,
     repeat: -1,
   });
 
@@ -24,7 +24,7 @@ export default function createCharacterAnims(anims) {
       start: 1,
       end: 4,
     }),
-    frameRate: 3,
+    frameRate: 5,
     repeat: -1,
   });
 }
