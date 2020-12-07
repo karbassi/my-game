@@ -1,6 +1,10 @@
 import createCharacterAnims from '../anims/character-anims.js';
 import { debugDraw } from '../utils/debug.js';
 
+// TODO(samar): Add background audio
+// TODO(samar): Fix running animation
+// TODO(samar): Have a better idle animation
+
 export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
@@ -15,27 +19,45 @@ export default class Game extends Phaser.Scene {
   create() {
     createCharacterAnims(this.anims);
 
-    this.add.image(800, 1615, 'background');
+    this.background = this.add.image(0, -60, 'background').setOrigin(0, 0);
+    this.background.setScrollFactor(0);
 
     const map = this.make.tilemap({ key: 'mygame' });
     const tileset = map.addTilesetImage('entire-set', 'tiles');
 
     this.mainLayer = map.createStaticLayer('main', tileset);
     this.mainLayer.setCollisionByProperty({ collides: true });
-    this.interactionLayer = map.createStaticLayer('interaction-layer', tileset);
-    this.interactionLayer.setCollisionByProperty({ pickup: true });
+    // this.interactionLayer = map.createStaticLayer('interaction-layer', tileset);
+    // this.interactionLayer.setCollisionByProperty({ pickup: true });
 
     // debugDraw(this.main, this);
 
     this.character = this.createCharacter();
     this.physics.add.collider(this.character, this.mainLayer);
-    this.physics.add.collider(
-      this.character,
-      this.interactionLayer,
-      this.pickupInteraction
-    );
+
 
     this.cameras.main.startFollow(this.character, true);
+
+    this.pickup = this.physics.add.image(900, 1100, 'pickup');
+
+    this.physics.add.collider(this.pickup, this.mainLayer);
+
+    this.time.addEvent({
+      delay: 10,
+      callback: ()  => {
+        this.pickup.angle -= 1;
+      },
+      callbackScope: this,
+      loop: true,
+    });
+
+    this.physics.add.collider(
+      this.character,
+      this.pickup,
+      this.pickupInteraction,
+      null,
+      this
+    );
 
     //this.character.setVelocity(0, 0);
 
@@ -88,12 +110,14 @@ export default class Game extends Phaser.Scene {
     //   this.character.setVelocityY(-330);
     // }
 
-    //   if (cursors.up.isDown && player.body.touching.down) { player.setVelocityY(-330);}
+    // if (cursors.up.isDown && player.body.touching.down) {
+    //   player.setVelocityY(-330);
+    // }
   }
 
   pickupInteraction(character, interaction) {
-    // console.log(interaction);
-    // interaction.destroy();
+    console.log(interaction);
+    interaction.destroy();
     // interaction.visible = false;
   }
 }
