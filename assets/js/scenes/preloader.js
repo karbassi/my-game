@@ -4,7 +4,8 @@ export default class Preloader extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('background', 'assets/img/background.png');
+    this.load.image('background', 'assets/img/background.png'
+    );
     this.load.image('tiles', 'assets/tiles/frame.png');
     this.load.tilemapTiledJSON('mygame', 'assets/tiles/level-design.json');
 
@@ -13,6 +14,11 @@ export default class Preloader extends Phaser.Scene {
       'assets/img/character/character.png',
       'assets/img/character/character.json'
     );
+
+    this.load.audio('bgm', [
+      './assets/audio/bgm.ogg',
+      './assets/audio/bgm.mp3',
+    ]);
   }
 
   create() {

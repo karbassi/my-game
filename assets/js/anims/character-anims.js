@@ -1,7 +1,19 @@
 export default function createCharacterAnims(anims) {
+  // anims.create({
+  //   key: 'character-idle',
+  //   frames: [{ key: 'character', frame: 'turn' }],
+  // });
+
   anims.create({
     key: 'character-idle',
-    frames: [{ key: 'character', frame: 'turn' }],
+    frames: anims.generateFrameNames('character', {
+      prefix: 'idle-',
+      suffix: '',
+      start: 1,
+      end: 9,
+    }),
+    frameRate: 5,
+    repeat: -1,
   });
 
   anims.create({
@@ -10,9 +22,9 @@ export default function createCharacterAnims(anims) {
       prefix: 'run-left-',
       suffix: '',
       start: 1,
-      end: 4,
+      end: 9,
     }),
-    frameRate: 5,
+    frameRate: 25,
     repeat: -1,
   });
 
@@ -22,9 +34,9 @@ export default function createCharacterAnims(anims) {
       prefix: 'run-right-',
       suffix: '',
       start: 1,
-      end: 4,
+      end: 9,
     }),
-    frameRate: 5,
+    frameRate: 25,
     repeat: -1,
   });
 }

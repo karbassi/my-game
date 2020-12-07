@@ -3,7 +3,7 @@ import Game from './scenes/game.js';
 
 const config = {
   type: Phaser.AUTO,
-  width: 900,
+  width: 1100,
   height: 670,
   // 800, 600
   physics: {

@@ -15,7 +15,7 @@ export default class Game extends Phaser.Scene {
   create() {
     createCharacterAnims(this.anims);
 
-    this.add.image(900, 1400, 'background');
+    this.add.image(800, 1615, 'background');
 
     const map = this.make.tilemap({ key: 'mygame' });
     const tileset = map.addTilesetImage('entire-set', 'tiles');
@@ -34,9 +34,22 @@ export default class Game extends Phaser.Scene {
       this.interactionLayer,
       this.pickupInteraction
     );
+
     this.cameras.main.startFollow(this.character, true);
 
     //this.character.setVelocity(0, 0);
+
+    this.music = this.sound.add('bgm');
+
+    this.music.play({
+      mute: false,
+      volume: 0.1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay: 0,
+    });
   }
 
   createCharacter() {
