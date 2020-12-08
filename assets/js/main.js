@@ -3,9 +3,8 @@ import Game from './scenes/game.js';
 
 const config = {
   type: Phaser.AUTO,
-  width: 1100,
-  height: 670,
-  // 800, 600
+  width: 1068,
+  height: 660,
   physics: {
     default: 'arcade',
     arcade: {

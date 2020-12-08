@@ -6,6 +6,7 @@ export default class Preloader extends Phaser.Scene {
   preload() {
     this.load.image('background', 'assets/img/background.png');
     this.load.image('pickup', 'assets/img/pickup.png');
+    this.load.image('pickup2', 'assets/img/pickup.png');
     this.load.image('tiles', 'assets/tiles/frame.png');
     this.load.tilemapTiledJSON('mygame', 'assets/tiles/level-design.json');
 

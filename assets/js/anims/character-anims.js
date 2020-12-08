@@ -1,9 +1,4 @@
 export default function createCharacterAnims(anims) {
-  // anims.create({
-  //   key: 'character-idle',
-  //   frames: [{ key: 'character', frame: 'turn' }],
-  // });
-
   anims.create({
     key: 'character-idle',
     frames: anims.generateFrameNames('character', {

@@ -1,10 +1,6 @@
 import createCharacterAnims from '../anims/character-anims.js';
 import { debugDraw } from '../utils/debug.js';
 
-// TODO(samar): Add background audio
-// TODO(samar): Fix running animation
-// TODO(samar): Have a better idle animation
-
 export default class Game extends Phaser.Scene {
   constructor() {
     super('game');
@@ -19,7 +15,7 @@ export default class Game extends Phaser.Scene {
   create() {
     createCharacterAnims(this.anims);
 
-    this.background = this.add.image(0, -60, 'background').setOrigin(0, 0);
+    this.background = this.add.image(0, -70, 'background').setOrigin(0, 0);
     this.background.setScrollFactor(0);
 
     const map = this.make.tilemap({ key: 'mygame' });
@@ -27,24 +23,21 @@ export default class Game extends Phaser.Scene {
 
     this.mainLayer = map.createStaticLayer('main', tileset);
     this.mainLayer.setCollisionByProperty({ collides: true });
-    // this.interactionLayer = map.createStaticLayer('interaction-layer', tileset);
-    // this.interactionLayer.setCollisionByProperty({ pickup: true });
 
     // debugDraw(this.main, this);
 
     this.character = this.createCharacter();
     this.physics.add.collider(this.character, this.mainLayer);
 
-
     this.cameras.main.startFollow(this.character, true);
 
-    this.pickup = this.physics.add.image(900, 1100, 'pickup');
+    this.pickup = this.physics.add.image(855, 1100, 'pickup');
 
     this.physics.add.collider(this.pickup, this.mainLayer);
 
     this.time.addEvent({
       delay: 10,
-      callback: ()  => {
+      callback: () => {
         this.pickup.angle -= 1;
       },
       callbackScope: this,
@@ -59,10 +52,28 @@ export default class Game extends Phaser.Scene {
       this
     );
 
-    //this.character.setVelocity(0, 0);
+    this.pickup2 = this.physics.add.image(2015, 800, 'pickup2');
+
+    this.physics.add.collider(this.pickup2, this.mainLayer);
+
+    this.time.addEvent({
+      delay: 10,
+      callback: () => {
+        this.pickup2.angle -= 1;
+      },
+      callbackScope: this,
+      loop: true,
+    });
+
+    this.physics.add.collider(
+      this.character,
+      this.pickup2,
+      this.pickupInteraction,
+      null,
+      this
+    );
 
     this.music = this.sound.add('bgm');
-
     this.music.play({
       mute: false,
       volume: 0.1,
@@ -77,7 +88,6 @@ export default class Game extends Phaser.Scene {
   createCharacter() {
     const character = this.physics.add.sprite(600, 1100, 'character');
     character.setActive(true);
-    // character.setCollideWorldBounds(true);
     character.onWorldBounds = true;
     character.play('character-idle');
 
@@ -88,8 +98,6 @@ export default class Game extends Phaser.Scene {
     if (!this.cursors || !this.character) {
       return;
     }
-
-    // console.log(this.character.body.blocked.down);
 
     if (this.cursors.left.isDown) {
       this.character.play('character-run-left', true);
@@ -106,18 +114,10 @@ export default class Game extends Phaser.Scene {
       this.character.play('character-run-right', true);
       this.character.setVelocityY(-this.CHARACTER_SPEED * 2);
     }
-    // if (this.cursors.up.isDown) {
-    //   this.character.setVelocityY(-330);
-    // }
-
-    // if (cursors.up.isDown && player.body.touching.down) {
-    //   player.setVelocityY(-330);
-    // }
   }
 
   pickupInteraction(character, interaction) {
     console.log(interaction);
     interaction.destroy();
-    // interaction.visible = false;
   }
 }
